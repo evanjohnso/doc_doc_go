@@ -36,7 +36,13 @@ gulp.task('bowerCSS', function () {
 
 gulp.task('bower', ['bowerJS', 'bowerCSS']);
 
-gulp.task('jsBrowserify', function() {
+gulp.task('concatInterface', function() {
+  return gulp.src(['./js/*-interface.js'])
+  .pipe(concat('allConcat.js'))
+  .pipe(gulp.dest('./tmp'));
+});
+
+gulp.task('jsBrowserify', ['concatInterface'], function() {
   return browserify({ entries: ['./tmp/allConcat.js'] })
     .transform(babelify.configure({
       presets: ["es2015"]
@@ -69,12 +75,12 @@ gulp.task("build", ['clean'], function(){
   gulp.start('bower');
 });
 
-gulp.task("clean", function() {
+gulp.task("clean", function(){
   return del(['build', 'tmp']);
 });
 
 
-gulp.task('jshint', function() {
+gulp.task('jshint', function(){
   return gulp.src(['js/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
@@ -91,10 +97,10 @@ gulp.task('serve', function() {
   gulp.watch(['bower.json'], ['bowerBuild']);
 });
 
-gulp.task('jsBuild', ['jsBrowserify', 'jshint'], function() {
+gulp.task('jsBuild', ['jsBrowserify', 'jshint'], function(){
   browserSync.reload();
 });
 
-gulp.task('bowerBuild', ['bower'], function() {
+gulp.task('bowerBuild', ['bower'], function(){
   browserSync.reload();
 });
