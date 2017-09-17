@@ -7,11 +7,47 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  color: black;
+  color: white;
 }
 
 .jumbotron {
   text-align: center;
   color: white;
   background: inherit;
+}
+
+/*FLEX MODEL*/
+.output {
+  display: flex; /* or inline-flex */
+  flex-flow: row wrap;
+  justify-content: space-between;
+  /*align-items: baseline;*/
+}
+
+.item {
+  position: relative;
+  display: block;
+  margin: auto;
+  width: 300px;;
+  height: 300px;
+  flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ];
+  text-align: center;
+}
+
+.item h5 {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background: grey;
+  transition: .8s;
+}
+
+.item:hover h5 {
+  opacity: 1;
 }
