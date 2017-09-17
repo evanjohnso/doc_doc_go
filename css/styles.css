@@ -7,7 +7,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  color: white;
+  color: black;
 }
 
 .jumbotron {
@@ -20,6 +20,7 @@ body {
 .output {
   display: flex; /* or inline-flex */
   flex-flow: row wrap;
+  color: white;
   justify-content: space-between;
   /*align-items: baseline;*/
 }
@@ -34,6 +35,12 @@ body {
   text-align: center;
 }
 
+.item a {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 .item h5 {
   position: absolute;
   height: 100%;
@@ -44,10 +51,13 @@ body {
   right: 0;
   bottom: 0;
   margin: auto;
-  background: grey;
+  background: lightgrey;
   transition: .8s;
 }
 
 .item:hover h5 {
+  font-style: italic;
+  padding-top: 15px;
+  color: black;
   opacity: 1;
 }

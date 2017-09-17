@@ -1,10 +1,9 @@
 var apiKey = require('./../.env').apiKey;
 
 $(document).ready(function() {
-
-getSpeciality()
+getSpeciality()                       //load specialties with document
   .then(displayDropdown)              //displayDropdown callback function
-  .catch(function(errorObject) {      //catch any rejections of promises
+  .catch( function(errorObject) {     //catch any rejections of promises
     alert(errorObject);
   });
 
@@ -12,20 +11,17 @@ getSpeciality()
     evt.preventDefault();
     evt.stopImmediatePropagation();
     evt.stopPropagation();
-    // let location = $('input[name="userInputLocation"]').val();
+    let location = $('input[name="userInputLocation"]').val();
     // let condition = $('input[name="userInputCondition"]').val();
     let specialty = $('select[name="specialty"]').val();
-    // console.log(specialty);
-    let latLon = '45.5230622,-122.67648150000002,15';
-    let location = "portland, or";
+    $('#outputs').children().remove(); //clear previous searches
+    $('input').val('');
     getLatLon(location, specialty)
       .then(getDoctors)
       .then(displayDoctors)
       .catch( function (error) {
         alert("Sorry, there seems to be an error", error);
-      })
-    // getDoctors(latLon, specialty);
-    $('input').val('');
+      });
   });
 
   function getLatLon(location, specialty) {
@@ -35,22 +31,11 @@ getSpeciality()
       let lat = results[0].geometry.location.lat();
       let lng = results[0].geometry.location.lng();
       let coordinates = `${lat},${lng},15`; //last parameter is the search radius
-      console.log(coordinates);
       resolve(coordinates, specialty);
       reject("Google's geocoder failed, the servers are down. We're all fucked.");
       });
     });
   }
-
-
-  // getLatLon("portland, or", "dentist")
-  //   .then(getDoctors)
-  //   .catch( function(error) {
-  //     console.log('this is the error' + error);
-  //   });
-  // getDoctors(latLon, 'acupuncture')
-  //   .then(displayDoctors);
-
   function getDoctors(searchLocation, speciality) {
     return new Promise( function(resolve, reject) {
       $.ajax( {
@@ -66,7 +51,20 @@ getSpeciality()
         },
         dataType: 'json',
         success: function(responseObject) {
-          resolve(responseObject.data);
+          let scrubbedInfo = responseObject.data.map( function(doctor) {
+            return {
+              first: doctor.profile.first_name,
+              last: doctor.profile.last_name,
+              title: doctor.profile.title,
+              speciality: doctor.specialties[0].name,
+              picture: doctor.profile.image_url,
+              website: doctor.practices.website,
+              bio: doctor.profile.bio
+            };
+
+          });
+
+          resolve(scrubbedInfo);
         },
         error: function(error) {
           reject("API request for physician specialties failed, our bad");
@@ -77,12 +75,18 @@ getSpeciality()
   function displayDoctors(jsonArray) {
     console.log(jsonArray);
     jsonArray.forEach(function(doctor) {
+      let bioString = doctor.bio;
+      if (bioString.length > 700) { //if string is too big, find close period and end there
+        let endString = indexOf('.', 700);
+        bioString = bioString.slice(0, endString);
+      }
         $('#outputs').append( `<div class='item'>
-                                  <h3>${doctor.profile.first_name} ${doctor.profile.last_name}, ${doctor.profile.title}</h3>
-                                  <h4>${doctor.specialties[0].name}</h4>
-                                  <img src="${doctor.profile.image_url}" alt='No picture to display'>
-                                  <h5>${doctor.profile.bio}</h5>
-                              </div>`);
+                                  <h3>${doctor.first} ${doctor.last}, ${doctor.title}</h3>
+                                  <h4>${doctor.speciality}</h4>
+                                  <img src="${doctor.picture}" alt='No picture to display'>
+                                  <h5>${bioString}</h5>
+                              </div>`
+                            );
 
       console.log(doctor);
     });
