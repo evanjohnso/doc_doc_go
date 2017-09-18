@@ -57,7 +57,7 @@ body {
 
 .item:hover h5 {
   font-style: italic;
-  padding-top: 15px;
+  padding-top: 5em;
   color: black;
   opacity: 1;
 }
