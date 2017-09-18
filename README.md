@@ -4,12 +4,14 @@
 
 ## Description
 
-_The cosmic calculator will provide a user with their age based off of other planets in the Milky Way_
+_Enter a location and the specialty you require and a list of doctors in the given
+proximity will appear_
+_Stay tuned for the implementation of Google maps!_
 
 
 ## Setup/Installation Requirements
 
-* Google Chrome
+* Chrome
 * Node
 
 ```console
@@ -17,7 +19,7 @@ _The cosmic calculator will provide a user with their age based off of other pla
 ```
 
 ```console
-  cd GalacticAge
+  cd DocDocGo
 ```
 
 ```console
@@ -33,9 +35,8 @@ _The cosmic calculator will provide a user with their age based off of other pla
 ## Development Specifications
 | Behavior      | Example Input         | Example Output        |
 | ------------- | ------------- | ------------- |
-| Enter Birthday | 9/9/1991  |  26  |
-| Interested in Mercury | Mercury  |  104.167 years  |
-| Gender/Weight Specifics | Overweight Male  |  Difference in user age from average earth age  |
+| Enter Location && speciality | Seattle, Dentist  |  15 doctors in your area!  |
+
 
 
 ## Technologies Used
@@ -43,7 +44,10 @@ _The cosmic calculator will provide a user with their age based off of other pla
 * _JavaScript_
 * _Node_
 * _Gulp_
-* _Jasmine_
+* _Postman_
+
+## Known Bugs
+* If user enters New York and Dentist, the data returned is unable to be processed by the current code, need account for more variance in the JSON.
 
 
 ### License
