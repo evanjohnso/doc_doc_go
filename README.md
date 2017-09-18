@@ -8,6 +8,14 @@ _Enter a location and the specialty you require and a list of doctors in the giv
 proximity will appear_
 _Stay tuned for the implementation of Google maps!_
 
+## First Time implementations
+* Map/Filter to more efficiently iterate through data structures
+* Session Storage to store information without a server
+* Linking API calls together depending on previous return values with Promises
+* Flex Box Model to load an uncertain amount of data
+* Try/Catch blocks in API calls
+
+
 
 ## Setup/Installation Requirements
 
