@@ -3,7 +3,7 @@ html {
   min-height: 100%;
 }
 body {
-  background: url("https://candiasanders.files.wordpress.com/2014/03/mtr.jpg");
+  background: url("../img/MRI-background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -11,6 +11,7 @@ body {
 }
 
 .jumbotron {
+  margin-top: 3em;
   text-align: center;
   color: white;
   background: inherit;
@@ -25,6 +26,23 @@ body {
   /*align-items: baseline;*/
 }
 
+label {
+  color: white;
+}
+
+#fakeModal {
+  text-align: center;
+  font-size: 24px;
+  color: blue;
+  display: none;
+  background: lightgrey;
+  padding-bottom: 5px;
+}
+#fakeModal small {
+  font-size: 12px;
+  color: black;
+}
+
 .item {
   position: relative;
   display: block;
@@ -33,6 +51,7 @@ body {
   height: 300px;
   flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ];
   text-align: center;
+  border-radius: 5%;
 }
 
 .item a {
@@ -56,6 +75,7 @@ body {
 }
 
 .item:hover h5 {
+  cursor: pointer;
   font-style: italic;
   padding-top: 5em;
   color: black;

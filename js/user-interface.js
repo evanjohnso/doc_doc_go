@@ -8,13 +8,16 @@ logic.getSpeciality()                       //load specialties with document
       });
 
   $("#userInput").submit(function(evt) {
+
     evt.preventDefault();
     evt.stopImmediatePropagation();
     evt.stopPropagation();
     let location = $('input[name="userInputLocation"]').val();
     let specialty = $('select[name="specialty"]').val();
     $('#outputs').children().remove(); //clear previous searches
+    sessionStorage.clear();
     $('input').val('');
+    //call google geocode to find doctors within this location and speciality
     logic.getLatLon(location, specialty)
       .then(logic.getDoctors)
       .then(displayDoctors)
@@ -34,19 +37,34 @@ logic.getSpeciality()                       //load specialties with document
       let bioString = doctor.bio;
       if (bioString.length == 0) {
         bioString = "No bio for this doctor available.";
-      } else if (bioString.length > 1000) {
-        let endString = bioString.indexOf('.', 1000);
+      } else if (bioString.length > 700) {
+        let endString = bioString.indexOf('.', 700);
         bioString = bioString.slice(0, endString);
       }
         $display.append( `<div class='item'>
                             <h3>${doctor.first} ${doctor.last}, ${doctor.title}</h3>
                             <h4>${doctor.speciality}</h4>
                             <img src="${doctor.picture}" alt='No picture to display'>
-                            <h5>${bioString}</h5>
+                            <h5 id="${doctor.uid}" data-toggle="modal" data-target="#myModal">${bioString}</h5>
                           </div>`
                         );
     });
+
+    $('.item h5').on('click', function(e) {
+      logic.callDoctor(
+        $(e.target).attr('id'))
+        .then(modal)
+        .catch( function(error) {
+          alert(error);
+        });
+    });
   }
+  $('#close').on('click', function(e) {
+    e.preventDefault();
+    $(e.target).parent().nextAll().fadeIn(1000);
+    $(e.target).parent().slideUp(1000);
+
+  });
   function displayDropdown(jsonArray) {
       //scrub data from (xx-xx-xx) to (Xx xx xx)
       let sorted = jsonArray.data.map( function(element) {
@@ -60,6 +78,23 @@ logic.getSpeciality()                       //load specialties with document
     });
   }
 
+  function modal(doctorInfo) {
+    //filter out only doctors accepting new patients
 
-
+    let activeOffices = doctorInfo.practices.filter (function(location) {
+      return location.accepts_new_patients;
+    });
+    console.log(activeOffices);
+    let address = activeOffices[0].visit_address;
+    address = `${address.street} ${address.city}, ${address.state} ${address.zip}`;
+    let number = activeOffices[0].phones[0].number;
+    number = `${number.slice(0,3)}-${number.slice(3,6)}-${number.slice(6)}`;
+    let coords = `${activeOffices[0].lat}, ${activeOffices[0].lon}`;
+    $('#officeCoords').text(coords);
+    $('#userLocation').text(sessionStorage.getItem('userLocation'));
+    $("#number").text(number);
+    $('#address').text(address);
+    $('#fakeModal').slideDown(1000);
+    $('#fakeModal ~ ').fadeOut(1000);
+    }
 });

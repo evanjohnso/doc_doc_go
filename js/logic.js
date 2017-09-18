@@ -13,6 +13,7 @@ export let DocDoc = {
           let lat = results[0].geometry.location.lat();
           let lng = results[0].geometry.location.lng();
           let coordinates = `${lat},${lng},15`;         //last parameter is the search radius
+          sessionStorage.setItem('userLocation', coordinates);
           resolve(coordinates, specialty);
           });
       } catch (e) {
@@ -35,7 +36,7 @@ export let DocDoc = {
         },
         dataType: 'json',
         success: function(responseObject) {
-          console.log(responseObject);
+
           try {
             let scrubbedInfo = responseObject.data.map( function(doctor) {
               return {
@@ -45,7 +46,8 @@ export let DocDoc = {
                 speciality: doctor.specialties[0].name,
                 picture: doctor.profile.image_url,
                 website: doctor.practices.website,
-                bio: doctor.profile.bio
+                bio: doctor.profile.bio,
+                uid: doctor.uid
               };
             });
             resolve(scrubbedInfo);
@@ -75,6 +77,25 @@ export let DocDoc = {
         error: function(error) {
           reject("Request for medical specialties failed, our bad");
         }
+      });
+    });
+  },
+  callDoctor: (uid) => {
+    return new Promise( function(resolve, reject) {
+      $.ajax( {
+        url: `https://api.betterdoctor.com/2016-03-01/doctors/${uid}`,
+        method: "GET",
+        data: {
+          user_key: apiKey
+        },
+        dataType: 'json',
+        success: function(doctorInfo) {
+          resolve(doctorInfo.data);
+        },
+        error: function (errorObject) {
+          reject("There was an error accessing this doctor.");
+        }
+
       });
     });
   }

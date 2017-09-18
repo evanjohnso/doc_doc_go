@@ -37,6 +37,12 @@ _Stay tuned for the implementation of Google maps!_
 | ------------- | ------------- | ------------- |
 | Enter Location && speciality | Seattle, Dentist  |  15 doctors in your area!  |
 
+## Output Examples
+![main screen](img/display1.png)
+***
+![After clicking on doctor](img/display2.png)
+***
+
 
 
 ## Technologies Used
