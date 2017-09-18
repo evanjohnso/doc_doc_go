@@ -11,12 +11,13 @@
   </head>
   <body>
     <div class="container">
+
       <div lass="container" id="fakeModal">
+        <div id="bikeMap" class="maps"  style="width:600px;height:500px;">
+        </div>
         <p><span id="title"></span><p>
         <p><span id="number"></span></p>
         <p><em><span id="address"></span></em></p><hr>
-        <small>Fresh API call for every doctor clicked on</small><br>
-        <small>Eventually This Will Be Google Maps</small><br>
         <small>The most recent location search is stored in session <span id="userLocation"></span></small><br>
         <small>Office Coordinates: <span id="officeCoords"></span></small><br>
         <small>Filter method ensures only locations actively accepting new patients shows up</small><br>
@@ -44,8 +45,7 @@
       </div>
       <div class="output" id="outputs">
       </div>
-      <div class="container footer">
-      </div>
+
     </div>
   </body>
 </html>
