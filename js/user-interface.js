@@ -61,7 +61,7 @@ logic.getSpeciality()                       //load specialties with document
   }
   $('#close').on('click', function(e) {
     e.preventDefault();
-    $(e.target).parent().nextAll().fadeIn(1000);
+    $(e.target).parent().nextAll().slideDown(1000);
     $(e.target).parent().slideUp(1000);
 
   });
@@ -84,7 +84,6 @@ logic.getSpeciality()                       //load specialties with document
     let activeOffices = doctorInfo.practices.filter (function(location) {
       return location.accepts_new_patients;
     });
-    // console.log(activeOffices);
     let address = activeOffices[0].visit_address;
     address = `${address.street} ${address.city}, ${address.state} ${address.zip}`;
     let number = activeOffices[0].phones[0].number;
@@ -96,8 +95,8 @@ logic.getSpeciality()                       //load specialties with document
     $("#number").text(number);
     $('#address').text(address);
     $('#fakeModal').slideDown(1000);
-    $('#fakeModal ~ ').fadeOut(1000);
-    userLocation = userLocation.slice(0, userLocation.length-3);
+    $('#fakeModal ~ ').slideDown(1000);
+    userLocation = userLocation.slice(0, userLocation.length-3); //scrub data to work with google lat/lng object
     let split = userLocation.split(',');
     let myObject = {
       lat: parseFloat(split[0]),
@@ -112,14 +111,14 @@ logic.getSpeciality()                       //load specialties with document
     function initializeMap(ourLocation, officeLocation) {
       let ourMap = new google.maps.Map(document.getElementById('bikeMap'), {
       center: ourLocation,
-      zoom: 10
+      zoom: 14
     });
-    let anothermarker = new google.maps.Marker({
+    new google.maps.Marker({
        position: ourLocation,
        map: ourMap,
        title: 'Bike!'
     });
-    let marker = new google.maps.Marker({
+    new google.maps.Marker({
        position: officeLocation,
        map: ourMap,
        title: 'Bike!'
