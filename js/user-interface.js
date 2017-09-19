@@ -61,7 +61,7 @@ logic.getSpeciality()                       //load specialties with document
   }
   $('#close').on('click', function(e) {
     e.preventDefault();
-    $(e.target).parent().nextAll().fadeIn(1000);
+    $(e.target).parent().nextAll().slideDown(1000);
     $(e.target).parent().slideUp(1000);
 
   });
@@ -96,7 +96,7 @@ logic.getSpeciality()                       //load specialties with document
     $("#number").text(number);
     $('#address').text(address);
     $('#fakeModal').slideDown(1000);
-    $('#fakeModal ~ ').fadeOut(1000);
+    $('#fakeModal ~ ').slideUp(1000);
     userLocation = userLocation.slice(0, userLocation.length-3);
     let split = userLocation.split(',');
     let myObject = {
