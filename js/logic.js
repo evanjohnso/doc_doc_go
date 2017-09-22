@@ -1,7 +1,7 @@
 var apiKey = require('./../.env').apiKey;
 
 export let DocDoc = {
-  getLatLon: (location, specialty) => {
+  getLatLon: (location, speciality) => {
     return new Promise( function(resolve, reject) {
       try {
         let geocoder = new google.maps.Geocoder();
@@ -12,23 +12,28 @@ export let DocDoc = {
           }
           let lat = results[0].geometry.location.lat();
           let lng = results[0].geometry.location.lng();
-          let coordinates = `${lat},${lng},15`;         //last parameter is the search radius
+          let coordinates = `${lat},${lng},15`;           //last parameter is the search radius
           sessionStorage.setItem('userLocation', coordinates);
-          resolve(coordinates, specialty);
+          //passing multiple arguments didn't work here..
+          resolve( {
+            coordinates: coordinates,
+            speciality: speciality
           });
+        });
       } catch (e) {
         console.log(e.message);
       }
     });
   },
-  getDoctors: (searchLocation, speciality) => {
+  getDoctors: (previousPromise) => {
+    console.log(previousPromise.speciality);
     return new Promise( function(resolve, reject) {
       $.ajax( {
         url: `https://api.betterdoctor.com/2016-03-01/doctors`,
         method: "GET",
         data: {
-          speciality_uid: speciality,
-          location: searchLocation,
+          speciality_uid: previousPromise.speciality,
+          location: previousPromise.coordinates,
           sort: 'distance-asc',
           skip: 0,
           limit: '15',
@@ -36,7 +41,6 @@ export let DocDoc = {
         },
         dataType: 'json',
         success: function(responseObject) {
-
           try {
             let scrubbedInfo = responseObject.data.map( function(doctor) {
               return {

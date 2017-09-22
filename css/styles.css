@@ -77,7 +77,7 @@ label {
 .item:hover h5 {
   cursor: pointer;
   font-style: italic;
-  padding-top: 5em;
+  padding-top: 5em;s
   color: black;
   opacity: 1;
 }

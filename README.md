@@ -23,7 +23,7 @@ _Stay tuned for the implementation of Google maps!_
 * Node
 
 ```console
-  git clone https://github.com/evanjohnso/DocDocGo.git
+  git clone https://github.com/evanjohnso/doc_doc_go.git
 ```
 
 ```console
@@ -62,6 +62,8 @@ _Stay tuned for the implementation of Google maps!_
 
 ## Known Bugs
 * If user enters New York and Dentist, the data returned is unable to be processed by the current code, need account for more variance in the JSON.
+* Output of doctors is repeated, something wrong with the specialty doctor API call
+* Reevaluate using try/catch block to handle API call errors
 
 
 ### License

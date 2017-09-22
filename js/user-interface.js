@@ -3,7 +3,7 @@ import { DocDoc as logic } from './../js/logic.js';
 $(document).ready(function() {
 logic.getSpeciality()                       //load specialties with document
       .then(displayDropdown)                //displayDropdown callback function
-      .catch( function(errorObject) {       //catch any rejections of promises
+      .catch( function(errorObject) {       //catch any errors of promises
         alert(errorObject);
       });
 
@@ -16,7 +16,7 @@ logic.getSpeciality()                       //load specialties with document
     let specialty = $('select[name="specialty"]').val();
     $('#outputs').children().remove(); //clear previous searches
     sessionStorage.clear();
-    $('input').val('');
+    $('select[name="specialty"]').val('');
     //call google geocode to find doctors within this location and speciality
     logic.getLatLon(location, specialty)
       .then(logic.getDoctors)
@@ -108,22 +108,32 @@ logic.getSpeciality()                       //load specialties with document
       lng: parseFloat(`${activeOffices[0].lon}`)
     };
     initializeMap(myObject, office);
-    }
-    function initializeMap(ourLocation, officeLocation) {
-      let ourMap = new google.maps.Map(document.getElementById('bikeMap'), {
-      center: ourLocation,
-      zoom: 10
-    });
-    let anothermarker = new google.maps.Marker({
-       position: ourLocation,
-       map: ourMap,
-       title: 'Bike!'
-    });
-    let marker = new google.maps.Marker({
-       position: officeLocation,
-       map: ourMap,
-       title: 'Bike!'
-    });
   }
+
+
+  function initializeMap(ourLocation, officeLocation) {
+    let ourMap = new google.maps.Map(document.getElementById('bikeMap'), {
+    center: ourLocation,
+    zoom: 10
+  });
+
+
+
+
+
+
+
+  
+  let anothermarker = new google.maps.Marker({
+     position: ourLocation,
+     map: ourMap,
+     title: 'Bike!'
+  });
+  let marker = new google.maps.Marker({
+     position: officeLocation,
+     map: ourMap,
+     title: 'Bike!'
+  });
+}
 
 });
