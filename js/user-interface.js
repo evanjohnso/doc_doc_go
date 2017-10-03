@@ -1,14 +1,23 @@
 import { DocDoc as logic } from './../js/logic.js';
 
-$(document).ready(function() {
-logic.getSpeciality()                       //load specialties with document
-      .then(displayDropdown)                //displayDropdown callback function
-      .catch( function(errorObject) {       //catch any errors of promises
+logic.getSpeciality()
+      .then(displayDropdown)
+      .catch( function(errorObject) {
         alert(errorObject);
       });
 
-  $("#userInput").submit(function(evt) {
+function displayDropdown(jsonArray) {
+    //create sorted dropdown
+    jsonArray.data.map( (element) => element.actor )
+                  .sort()
+                  .forEach( (element) => {
+                    $('select[name="specialty"]')
+                      .append(`<option value="${element}">${element}</option>`);
+                });
+}
 
+$(document).ready(function() {
+  $("#userInput").submit(function(evt) {
     evt.preventDefault();
     evt.stopImmediatePropagation();
     evt.stopPropagation();
@@ -29,11 +38,12 @@ logic.getSpeciality()                       //load specialties with document
   function displayDoctors(jsonArray) {
     let $display = $('#outputs');
     if (jsonArray.length == 0) {
-      return $display.html("<h1>Sorry, looks like we have no doctors. Please try your search again!<//h1>")
-                .css('text-align', 'center');
+      return $display.html(`<h1>Sorry, looks like we have no doctors.
+                                Please try your search again!</h1>`)
+                                .css('text-align', 'center');
     }
     jsonArray.forEach(function(doctor) {
-      //if string is too big, truncate to the closes end sentance
+      //if string is too big, truncate to the closes end sentence
       let bioString = doctor.bio;
       if (bioString.length == 0) {
         bioString = "No bio for this doctor available.";
@@ -49,7 +59,7 @@ logic.getSpeciality()                       //load specialties with document
                           </div>`
                         );
     });
-
+    //API call for specific doctor info
     $('.item h5').on('click', function(e) {
       logic.callDoctor(
         $(e.target).attr('id'))
@@ -65,18 +75,6 @@ logic.getSpeciality()                       //load specialties with document
     $(e.target).parent().slideUp(1000);
 
   });
-  function displayDropdown(jsonArray) {
-      //scrub data from (xx-xx-xx) to (Xx xx xx)
-      let sorted = jsonArray.data.map( function(element) {
-        let changing = element.uid.split('-').join(' ');
-        return changing.toString().charAt(0).toUpperCase() + changing.toString().slice(1);
-      });
-      //alpha sort and append list options
-      sorted.sort();
-      sorted.forEach(function(element) {
-        $('select[name="specialty"]').append(`<option value="${element}">${element}</option>`);
-    });
-  }
 
   function modal(doctorInfo) {
     //filter out only doctors accepting new patients
@@ -116,14 +114,6 @@ logic.getSpeciality()                       //load specialties with document
     center: ourLocation,
     zoom: 10
   });
-
-
-
-
-
-
-
-  
   let anothermarker = new google.maps.Marker({
      position: ourLocation,
      map: ourMap,

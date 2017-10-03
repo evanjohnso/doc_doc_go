@@ -15,7 +15,8 @@ export let DocDoc = {
           let coordinates = `${lat},${lng},15`;           //last parameter is the search radius
           sessionStorage.setItem('userLocation', coordinates);
           //passing multiple arguments didn't work here..
-          resolve( {
+          resolve(
+          {
             coordinates: coordinates,
             speciality: speciality
           });
@@ -27,6 +28,7 @@ export let DocDoc = {
   },
   getDoctors: (previousPromise) => {
     console.log(previousPromise.speciality);
+    console.log(previousPromise.coordinates);
     return new Promise( function(resolve, reject) {
       $.ajax( {
         url: `https://api.betterdoctor.com/2016-03-01/doctors`,

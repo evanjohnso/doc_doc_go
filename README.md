@@ -35,6 +35,10 @@ _Stay tuned for the implementation of Google maps!_
 ```
 
 ```console
+  get an API key from BetterDoctor and put your key in a .env file
+```
+
+```console
   gulp serve
 ```
 
