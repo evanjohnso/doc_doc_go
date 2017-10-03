@@ -1,25 +1,21 @@
-# DocDocGo
+# <p align="center">DocDocGo</p>
 
-#### By Evan Johnson
+#### <p align="center">By Evan Johnson</p>
 
 ## Description
 
 _Enter a location and the specialty you require and a list of doctors in the given
 proximity will appear_
 
-## First Time implementations
-* Map/Filter to more efficiently iterate through data structures
-* Session Storage to store information without a server
-* Linking API calls together depending on previous return values with Promises
-* Flex Box Model to load an uncertain amount of data
-* Try/Catch blocks in API calls
-
-
+![main screen](img/display1.png)
+***
+![After clicking on doctor](img/display2.png)
+***
 
 ## Setup/Installation Requirements
 
-* Chrome
-* Node
+1. Chrome
+2. Node
 
 * Clone the repository
 ```console
@@ -33,9 +29,9 @@ proximity will appear_
 ```console
   npm install
 ```
-* Get an API key from <a href="https://betterdoctor.com/developers/">BetterDoctors</a>
+* Get an API key from [BetterDoctors](https://betterdoctor.com/developers/)
 * Create .env file in root directory and save API key as:
-```console
+```
   exports.apiKey = 'your_API_key_here';
 ```
 * Run program with
@@ -53,11 +49,6 @@ proximity will appear_
 | As a user i want to be able to see a map of where the doctors office is | Click on details | Google Maps |
 
 ## Output Examples
-![main screen](img/display1.png)
-***
-![After clicking on doctor](img/display2.png)
-***
-
 
 
 ## Technologies Used
@@ -74,6 +65,13 @@ proximity will appear_
 * If user enters New York and Dentist, the data returned is unable to be processed by the current code, need account for more variance in the JSON.
 * Output of doctors is repeated, something wrong with the specialty doctor API call
 * Reevaluate using try/catch block to handle API call errors versus native Ajax catch method
+
+## First Time implementations
+* Map/Filter to more efficiently iterate through data structures
+* Session Storage to store information without a server
+* Linking API calls together depending on previous return values with Promises
+* Flex Box Model to load an uncertain amount of data
+* Try/Catch blocks in API calls
 
 
 ### License
