@@ -6,7 +6,6 @@
 
 _Enter a location and the specialty you require and a list of doctors in the given
 proximity will appear_
-_Stay tuned for the implementation of Google maps!_
 
 ## First Time implementations
 * Map/Filter to more efficiently iterate through data structures
@@ -35,7 +34,16 @@ _Stay tuned for the implementation of Google maps!_
 ```
 
 ```console
-  get an API key from BetterDoctor and put your key in a .env file
+  get an API key from <a href="https://betterdoctor.com/developers/">BetterDoctors</a>
+```
+
+```console
+  create .env file in root directory
+```
+  Save your API key as
+```console
+  exports.apiKey = 'your_API_key_here';
+
 ```
 
 ```console

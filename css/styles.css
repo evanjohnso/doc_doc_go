@@ -46,6 +46,12 @@ label {
   color: black;
 }
 
+#bikeMap {
+  padding-top: 10px;
+  display: block;
+  margin: auto;
+}
+
 .item {
   position: relative;
   display: block;
@@ -80,7 +86,7 @@ label {
 .item:hover h5 {
   cursor: pointer;
   font-style: italic;
-  padding-top: 5em;
+  padding-top: 3em;
   color: black;
   opacity: 1;
 }
