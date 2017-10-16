@@ -66,12 +66,6 @@ proximity will appear_
 * Output of doctors is repeated, something wrong with the specialty doctor API call
 * Reevaluate using try/catch block to handle API call errors versus native Ajax catch method
 
-## First Time implementations
-* Map/Filter to more efficiently iterate through data structures
-* Session Storage to store information without a server
-* Linking API calls together depending on previous return values with Promises
-* Flex Box Model to load an uncertain amount of data
-* Try/Catch blocks in API calls
 
 
 ### License
