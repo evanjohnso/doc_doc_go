@@ -14,30 +14,16 @@ proximity will appear_
 
 ## Setup/Installation Requirements
 
-1. Chrome
-2. Node
-
-* Clone the repository
-```console
-  git clone https://github.com/evanjohnso/doc_doc_go.git
-```
-* Navigate to folder
-```console
-  cd DocDocGo
-```
-* Install Node dependencies
-```console
-  npm install
-```
+1. Chrome && Node
+* ``` git clone https://github.com/evanjohnso/doc_doc_go.git ```
+* ``` cd DocDocGo ```
+* ```npm install ```
 * Get an API key from [BetterDoctors](https://betterdoctor.com/developers/)
 * Create .env file in root directory and save API key as:
 ```
   exports.apiKey = 'your_API_key_here';
 ```
-* Run program with
-```console
-  gulp serve
-```
+* Run program ```gulp serve```
 
 
 
