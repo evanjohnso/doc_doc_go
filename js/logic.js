@@ -1,4 +1,4 @@
-var apiKey = require('./../.env').apiKey;
+let apiKey = require('./../.env').apiKey;
 import { CONSTANTS } from './../js/constants.js';
 
 export let DocDoc = {
