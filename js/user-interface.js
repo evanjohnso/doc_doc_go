@@ -1,10 +1,11 @@
 import { DocDoc as logic } from './../js/logic.js';
+import { CONSTANTS } from './../js/constants.js';
 
 logic.getSpeciality()
-  .then(displayDropdown)
-  .catch(function (errorObject) {
-    alert(errorObject);
-  });
+.then(displayDropdown)
+.catch(function (errorObject) {
+  alert(errorObject);
+});
 
 //create sorted dropdown
 function displayDropdown(jsonArray) {
@@ -25,7 +26,7 @@ $(document).ready(function () {
     let location = $('input[name="userInputLocation"]').val();
     let specialty = $('select[name="specialty"]').val();
     $('#outputs').children().remove(); //clear previous searches
-    sessionStorage.clear();
+    sessionStorage.removeItem(CONSTANTS.location);
     $('select[name="specialty"]').val('');
     //call google geocode to find doctors within this location and speciality
     logic.getLatLon(location, specialty)
@@ -39,8 +40,7 @@ $(document).ready(function () {
   function displayDoctors(jsonArray) {
     let $display = $('#outputs');
     if (jsonArray.length == 0) {
-      return $display.html(`<h1>Sorry, looks like we have no doctors.
-                                Please try your search again!</h1>`)
+      return $display.html(`<h1>${CONSTANTS.nullDoctors}</h1>`)
         .css('text-align', 'center');
     }
     jsonArray.forEach(function (doctor) {
@@ -88,7 +88,7 @@ $(document).ready(function () {
     let number = activeOffices[0].phones[0].number;
     number = `${number.slice(0, 3)}-${number.slice(3, 6)}-${number.slice(6)}`;
     let coords = `${activeOffices[0].lat}, ${activeOffices[0].lon}`;
-    let userLocation = sessionStorage.getItem('userLocation');
+    let userLocation = sessionStorage.getItem(CONSTANTS.location);
     $("#number").text(number);
     $('#address').text(address);
     $('#fakeModal').slideDown(1000);

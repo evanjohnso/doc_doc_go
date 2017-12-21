@@ -1,4 +1,5 @@
 var apiKey = require('./../.env').apiKey;
+import { CONSTANTS } from './../js/constants.js';
 
 export let DocDoc = {
   getLatLon: (location, speciality) => {
@@ -7,13 +8,13 @@ export let DocDoc = {
         let geocoder = new google.maps.Geocoder();
         geocoder.geocode( { address: location }, function(results) {
           if (results.length == 0) {
-            throw new Error("Google's geocoder failed, the servers are down. We're all fucked.");
+            throw new Error(CONSTANTS.googleFail);
             // reject("Google's geocoder failed, the servers are down. We're all fucked.");
           }
           let lat = results[0].geometry.location.lat();
           let lng = results[0].geometry.location.lng();
           let coordinates = `${lat},${lng},15`;           //last parameter is the search radius
-          sessionStorage.setItem('userLocation', coordinates);
+          sessionStorage.setItem(CONSTANTS.location, coordinates);
           //passing multiple arguments didn't work here..
           resolve(
           {
@@ -29,9 +30,11 @@ export let DocDoc = {
   getDoctors: (previousPromise) => {
     console.log(previousPromise.speciality);
     console.log(previousPromise.coordinates);
+    const url = CONSTANTS.baseURL + '/doctors';
+    // https://api.betterdoctor.com/2016-03-01/doctors
     return new Promise( function(resolve, reject) {
       $.ajax( {
-        url: `https://api.betterdoctor.com/2016-03-01/doctors`,
+        url: url,
         method: "GET",
         data: {
           speciality_uid: previousPromise.speciality,
@@ -68,9 +71,11 @@ export let DocDoc = {
     });
   },
    getSpeciality: () => {
+     const url = CONSTANTS.baseURL + '/specialties';
+    //  `https://api.betterdoctor.com/2016-03-01/specialties`
       return new Promise( function(resolve, reject) {
       $.ajax( {
-        url: `https://api.betterdoctor.com/2016-03-01/specialties`,
+        url: url,
         method: "GET",
         data: {
           limit: 50,
@@ -87,9 +92,11 @@ export let DocDoc = {
     });
   },
   callDoctor: (uid) => {
+    const url = CONSTANTS.baseURL + `/doctors/${uid}`;
+    // https://api.betterdoctor.com/2016-03-01/doctors/${uid}
     return new Promise( function(resolve, reject) {
       $.ajax( {
-        url: `https://api.betterdoctor.com/2016-03-01/doctors/${uid}`,
+        url: url,
         method: "GET",
         data: {
           user_key: apiKey
